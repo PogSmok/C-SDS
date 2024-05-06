@@ -734,9 +734,9 @@ Public License instead of this License.  But first, please read
     do { \
         void* p = realloc(vec.content, newSize*vec.elementSize); \
         if(p != NULL) { \
+            vec.capacity = newSize; \
             vec.content = p; \
-            if(vec.capacity <= newSize) vec.size = vec.capacity; \
-            else vec.size = newSize; \
+            if(vec.capacity <= vec.size) vec.size = vec.capacity; \
         } \
     } while(0) 
 
@@ -787,16 +787,15 @@ Public License instead of this License.  But first, please read
 // Input:
 //      vec(T) vec
 // Output:
-//      void -> Function works in-place.
+//      T -> the removed element
 // Description:
-//      Removes the last element of the vector.
-//      vec_pop({4,-1,25,31}) -> {4,-1,25}
+//      Removes the last element of the vector and returns it.
+//      vec_pop({4,-1,25,31}) -> 31
 // Behaviour:
-//      1) If the vector has size of 0 nothing is done.
-//      2) The last element is untouched, just vec.size is reduced, thus the element still can be technically reached.
+//      1) If the vector has size of 0, vec.content[0] is returned.
 #ifndef vec_pop
 #define vec_pop(vec) \
-    if(vec.size) vec.size--;
+    vec.content[vec.size ? --vec.size : 0]
 
 #endif // #ifndef vec_pop
 
