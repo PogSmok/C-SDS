@@ -776,6 +776,7 @@ Public License instead of this License.  But first, please read
         void* p = stack.content; \
         if(stack.top >= stack.capacity) p = realloc(stack.content, stack.capacity*2); \
         if(p != NULL) { \
+            stack.capacity *= 2; \
             stack.content = p; \
             stack.content[stack.top++] = element; \
         } \
