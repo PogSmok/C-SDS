@@ -159,7 +159,7 @@ copyright on the Program, and are irrevocable provided the stated
 conditions are met.  This License explicitly affirms your unlimited
 permission to run the unmodified Program.  The output from running a
 covered work is covered by this License only if the output, given its
-content, constitutes a covered work.  This License acknowledges your
+at, constitutes a covered work.  This License acknowledges your
 rights of fair use or other equivalent, as provided by copyright law.
 
   You may make, run and propagate covered works that you do not
@@ -488,7 +488,7 @@ this License.
   Each contributor grants you a non-exclusive, worldwide, royalty-free
 patent license under the contributor's essential patent claims, to
 make, use, sell, offer for sale, import and otherwise run, modify and
-propagate the contents of its contributor version.
+propagate the ats of its contributor version.
 
   In the following three paragraphs, a "patent license" is any express
 agreement or commitment, however denominated, not to enforce a patent
@@ -682,14 +682,14 @@ Public License instead of this License.  But first, please read
 
 // Using any of the functions below with different than expected datatypes (see comments and documentation) will result in an undefined behaviour.
 
-// T* content -> Array of type T, containing elements of the array.
-// size_t elementSize -> Size in bytes of an element stored in content, equivilent to sizeof(T).
-// size_t size -> Amount of elements stored in vector (content), index of last element is content[size-1].
-// size_t capacity -> Number of currently allocated elements (vec(t).content), once exceeded vec(T).content must be reallocated to greater size.
+// T* at -> Array of type T, containing elements of the array.
+// size_t elementSize -> Size in bytes of an element stored in at, equivilent to sizeof(T).
+// size_t size -> Amount of elements stored in vector (at), index of last element is at[size-1].
+// size_t capacity -> Number of currently allocated elements (vec(t).at), once exceeded vec(T).at must be reallocated to greater size.
 #ifndef vec
 #define vec(T) \
     struct { \
-        T* content; \
+        T* at; \
         size_t   elementSize; \
         size_t   size; \
         size_t  capacity; \
@@ -705,7 +705,7 @@ Public License instead of this License.  But first, please read
 //      Constructor of vec(T).
 //      vec(int) myVector = new_vec(int);
 // Behaviour:
-//      1) If malloc fails vec(T).content will be a NULL pointer.
+//      1) If malloc fails vec(T).at will be a NULL pointer.
 //      2) By default capacity of a vec(T) is 32.
 #ifndef new_vec
 #define new_vec(T) \
@@ -732,10 +732,10 @@ Public License instead of this License.  But first, please read
 #ifndef vec_resize
 #define vec_resize(vec, newSize) \
     do { \
-        void* p = realloc(vec.content, newSize*vec.elementSize); \
+        void* p = realloc(vec.at, newSize*vec.elementSize); \
         if(p != NULL) { \
             vec.capacity = newSize; \
-            vec.content = p; \
+            vec.at = p; \
             if(vec.capacity <= vec.size) vec.size = vec.capacity; \
         } \
     } while(0) 
@@ -747,14 +747,14 @@ Public License instead of this License.  But first, please read
 // Output:
 //      void -> Function works in-place.
 // Description:
-//      Deallocates content of the vector and sets all values to 0.
+//      Deallocates at of the vector and sets all values to 0.
 //      free({2,0,9}) -> {}
 // Behaviour:
-//      1) vec.content is explicitly set to NULL, thus all unsaved data is irreversably lost.
+//      1) vec.at is explicitly set to NULL, thus all unsaved data is irreversably lost.
 #ifndef vec_free
 #define vec_free(vec) \
-    free(vec.content); \
-    vec.content = NULL; \
+    free(vec.at); \
+    vec.at = NULL; \
     vec.elementSize = 0; \
     vec.size = 0; \
     vec.capacity = 0;
@@ -767,21 +767,23 @@ Public License instead of this License.  But first, please read
 // Output:
 //      void -> Function works in-place.
 // Description: 
-//      Incremenet's vector's size by 1 and appends provided element. Reallocates and increases capacity if needed.
+//      Increments vector's size by 1 and appends provided element. Reallocates and increases capacity if needed.
+//      Uses memcpy to avoid type assertion for nested vectors.
 //      vec_push({13,9,5}, 3) -> {13,9,5,3} 
 // Behaviour:
 //      1) If reallocation is needed to fit the element and realloc fails nothing is done.
 #ifndef vec_push
 #define vec_push(vec, element) \
     do { \
+        typeof(element) e = element; \
         size_t lastCapacity = 0; \
         if(vec.size >= vec.capacity) { \
             lastCapacity = vec.capacity; \
             vec_resize(vec, vec.capacity*2); \
         } \
-        if(lastCapacity == 0 || lastCapacity < vec.capacity) vec.content[vec.size++] = element; \
+        if(lastCapacity == 0 || lastCapacity < vec.capacity) \
+          memcpy(&vec.at[vec.size++], &e, vec.elementSize); \
     } while(0)
-
 #endif // #ifndef vec_push
 
 // Input:
@@ -792,10 +794,10 @@ Public License instead of this License.  But first, please read
 //      Removes the last element of the vector and returns it.
 //      vec_pop({4,-1,25,31}) -> 31
 // Behaviour:
-//      1) If the vector has size of 0, vec.content[0] is returned.
+//      1) If the vector has size of 0, vec.at[0] is returned.
 #ifndef vec_pop
 #define vec_pop(vec) \
-    vec.content[vec.size ? --vec.size : 0]
+    vec.at[vec.size ? --vec.size : 0]
 
 #endif // #ifndef vec_pop
 
@@ -806,22 +808,25 @@ Public License instead of this License.  But first, please read
 // Output:
 //      void -> Function works in-place.
 // Description: 
-//      Incremenet's vector's size by 1 and inserts given elementa at the given index, shifting all bigger indexes one to the right
+//      Increments vector's size by 1 and inserts given elementa at the given index, shifting all bigger indexes one to the right.
+//      Uses memcpy for asigning element at index to avoid type assertion for nested vectors.
 //      vec_insert({2,6,-24,1}, -9, 1) -> {2,-9,6,-24,1}
 // Behaviour:
-//      1) If index is out of bounds, nothing is done
+//      1) If index is out of bounds, works as vec_push
 #ifndef vec_insert
 #define vec_insert(vec, element, index) \
     do { \
-        if(index <= vec.size) { \
+        if(index > vec.size) vec_push(vec, element); \
+        else { \
+            typeof(element) e = element; \
             size_t lastCapacity = 0; \
             if(vec.size >= vec.capacity) { \
                 lastCapacity = vec.capacity; \
                 vec_resize(vec, vec.capacity*2); \
             } \
             if(lastCapacity == 0 || lastCapacity < vec.capacity) { \
-                memcpy(&vec.content[index+1], &vec.content[index], (vec.size-index)*vec.elementSize); \
-                vec.content[index] = element; \
+                memcpy(&vec.at[index+1], &vec.at[index], (vec.size-index)*vec.elementSize); \
+                memcpy(&vec.at[index], &e, vec.elementSize); \
                 vec.size++; \
             } \
         } \
@@ -842,7 +847,7 @@ Public License instead of this License.  But first, please read
 #ifndef vec_remove
 #define vec_remove(vec, index) \
     if(index < vec.size) { \
-        memcpy(&vec.content[index], &vec.content[index+1], (vec.size-index-1)*vec.elementSize); \
+        memcpy(&vec.at[index], &vec.at[index+1], (vec.size-index-1)*vec.elementSize); \
         vec.size--; \
     }
 
