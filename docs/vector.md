@@ -62,9 +62,9 @@ int main() {
     vec(vec(int)) myVec = new_vec(vec(int));
 
     // Fill our vector of vectors with empty vectors
-    vec(int) emptyVec = new_vec(int);
     for(int i = 0; i < 10; i++) {
         //NOTE: vec_push(myVec, new_vec(int)) will not work, since each new_vec(TYPE) is an unique anonymous type, it has to be declared first
+        vec(int) emptyVec = new_vec(int);
         vec_push(myVec, emptyVec);
     }
     
