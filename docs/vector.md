@@ -12,7 +12,7 @@ Entirely implemented using macros. Providing variables of types different than t
 **[vec_insert(vec(T) vec, T element, size_t index)][vec_insert]** -> Inserts `element` at `vec.at[index]` <br >
 **[vec_remove(vec(T) vec, size_t index)][vec_remove]** -> Removes an element from `vec.at[index]` <br >
 
-## Example
+## Examples
 ```c
 #include<stdio.h>
 
@@ -48,6 +48,57 @@ int main() {
     //Free the vector
     vec_free(myVec);
     
+    return 0;
+}
+```
+
+```c
+#include <stdio.h>
+
+#include "vector.h"
+
+int main() {    
+    // Initialize nested 2D vector
+    vec(vec(int)) myVec = new_vec(vec(int));
+
+    // Fill our vector of vectors with empty vectors
+    vec(int) emptyVec = new_vec(int);
+    for(int i = 0; i < 10; i++) {
+        //NOTE: vec_push(myVec, new_vec(int)) will not work, since each new_vec(TYPE) is an unique anonymous type, it has to be declared first
+        vec_push(myVec, emptyVec);
+    }
+    
+    // Fill our 2D vector with each row containing elements from 0 to row's index
+    for(int i = 0; i < myVec.size; i++) {
+        for(int j = 0; j <= i; j++) {
+            vec_push(myVec.at[i], j);
+        }
+    }
+    
+    for(int i = 0; i < myVec.size; i++) {
+        for(int j = 0; j < myVec.at[i].size; j++) {
+            printf("%i ", myVec.at[i].at[j]);
+        }
+        printf("\n");
+    }
+    /* 
+        0 
+        0 1 
+        0 1 2 
+        0 1 2 3 
+        0 1 2 3 4 
+        0 1 2 3 4 5 
+        0 1 2 3 4 5 6 
+        0 1 2 3 4 5 6 7 
+        0 1 2 3 4 5 6 7 8 
+        0 1 2 3 4 5 6 7 8 9
+    */ 
+
+    // Free our vector
+    for(int i = 0; i < myVec.size; i++) {
+        vec_free(myVec.at[i]);
+    }
+    vec_free(myVec);
     return 0;
 }
 ```
