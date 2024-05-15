@@ -250,4 +250,4 @@ for(int i = 0; i < myVec.size; i++) {
 [vec_push]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md#vec_push
 [vec_pop]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md#vec_pop
 [vec_insert]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md#vec_insert
-[vec_remove]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md#new_vec_remove
+[vec_remove]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md#vec_remove
