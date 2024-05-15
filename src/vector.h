@@ -153,7 +153,7 @@ limitations under the License.
 #ifndef vec_insert
 #define vec_insert(vec, element, index) \
     do { \
-        if (index > vec.size) vec_push(vec, element); \
+        if (index >= vec.size) vec_push(vec, element); \
         else { \
             typeof(element) e = element; \
             size_t lastCapacity = 0; \
