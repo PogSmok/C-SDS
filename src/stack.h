@@ -67,7 +67,7 @@ limitations under the License.
 #ifndef stack_free
 #define stack_free(stack) \
     free(stack.content); \
-    stack.at = NULL; \
+    stack.content = NULL; \
     stack.elementSize = 0; \
     stack.size = 0; \
     stack.capacity = 0;
