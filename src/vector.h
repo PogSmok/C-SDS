@@ -183,7 +183,8 @@ limitations under the License.
 //      1) If index is out of bounds, nothing is done.
 #ifndef vec_remove
 #define vec_remove(vec, index) \
-    if (index < vec.size) { \
+    if (index >= vec.size) vec_pop(vec); \
+    else { \
         memcpy(&vec.at[index], &vec.at[index+1], (vec.size-index-1)*vec.elementSize); \
         vec.size--; \
     }
