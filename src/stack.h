@@ -20,12 +20,14 @@ limitations under the License.
 // Using any of the functions below with different than expected datatypes (see comments and documentation) will result in an undefined behaviour
 
 // T* content -> Array of type T, containing elements of the stack.
+// size_t elementSize -> Size in bytes of an element stored in content, equivilent to sizeof(T).
 // size_t size -> Amount of elements in stack.
 // size_t capacity -> Number of currently allocated elements (stack(T).content), once exceeded stack(T).content must be reallocated to greater size.
 #ifndef stack
 #define stack(T) \
     struct { \
         T* content; \
+        size_t elementSize; \
         size_t size; \
         size_t capacity; \
     } 
@@ -46,11 +48,31 @@ limitations under the License.
 #define new_stack(T) \
     { \
         malloc(sizeof(T)*32), \
+        sizeof(T), \
         0, \
         32, \
     }
 
 #endif // #ifndef new_stack
+
+// Input:
+//      stack(T) stack
+// Output:
+//      void -> Function works in-place.
+// Description:
+//      Deallocates content of the stack and sets all values to 0.
+//      free({2,0,9}) -> {}
+// Behaviour:
+//      1) stack.content is explicitly set to NULL, thus all unsaved data is irreversably lost.
+#ifndef stack_free
+#define stack_free(stack) \
+    free(stack.content); \
+    stack.at = NULL; \
+    stack.elementSize = 0; \
+    stack.size = 0; \
+    stack.capacity = 0;
+
+#endif // #ifndef stack_free
 
 // Input:
 //      stack(T) stack
@@ -79,22 +101,7 @@ limitations under the License.
 #define stack_top(stack) \
     stack.size == 0 ? stack.content[0] : stack.content[stack.size-1]  
 
-#endif // #ifndef stack_top
-
-// Input:
-//      stack(T) stack
-// Output:
-//      void -> Function works in-place.
-// Description: 
-//      Removes top-most element of the stack.
-//      stack_pop({12,5,1}) -> {12,5}
-// Behaviour:
-//      1) If the stack is empty nothing is done.
-#ifndef stack_pop
-#define stack_pop(stack) \
-    if (stack.size != 0) stack.size--;
-
-#endif // #ifndef stack_pop
+#endif // #ifndef stack_top\
 
 // Input:
 //      stack(T) stack
@@ -111,7 +118,7 @@ limitations under the License.
 #define stack_push(stack, element) \
     do { \
         void* p = stack.content; \
-        if (stack.size >= stack.capacity) p = realloc(stack.content, stack.capacity*2); \
+        if (stack.size >= stack.capacity) p = realloc(stack.content, stack.elementSize*stack.capacity*2); \
         if (p != NULL) { \
             stack.capacity *= 2; \
             stack.content = p; \
@@ -120,3 +127,18 @@ limitations under the License.
     } while(0)
 
 #endif // #ifndef stack_push
+
+// Input:
+//      stack(T) stack
+// Output:
+//      void -> Function works in-place.
+// Description: 
+//      Removes top-most element of the stack.
+//      stack_pop({12,5,1}) -> {12,5}
+// Behaviour:
+//      1) If the stack is empty nothing is done.
+#ifndef stack_pop
+#define stack_pop(stack) \
+    if (stack.size != 0) stack.size--;
+
+#endif // #ifndef stack_pop
