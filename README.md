@@ -14,8 +14,7 @@
 </div>
 
 # Overview
-C-SDS is a comprehensive collection of well-known and practical data structures that have been implemented in the C programming language.
-This project offers extensive and detailed documentation, making it incredibly easy and efficient to utilize any data structure of your choice.
+C-SDS is a comprehensive collection of well-known and practical data structures that have been implemented in the C programming language using only header files and preprocessor instructions (macro). This project offers extensive and detailed documentation, making it incredibly easy and efficient to utilize any data structure of your choice.
 
 # Files
 C-SDS consists of:
