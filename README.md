@@ -28,7 +28,7 @@ C-SDS consists of:
 ## [![header][stack.h-badge]][stack.h-link] [![documentation][stack.md-badge]][stack.md-link]
 ## [![header][vector.h-badge]][vector.h-link] [![documentation][vector.md-badge]][vector.md-link]
 ## ![header][queue.h-badge] ![documentation][queue.md-badge]
-## ![header][deque.h-badge] ![documentation][deque.md-badge]
+## [![header][deque.h-badge]][deque.h-link] ![documentation][deque.md-badge]
 ## ![header][set.h-badge] ![documentation][set.md-badge]
 ## ![header][map.h-badge] ![documentation][map.md-badge]
 
@@ -42,6 +42,7 @@ C-SDS consists of:
 [vector.md-link]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md
 [stack.h-link]: https://github.com/PogSmok/C-SDS/blob/master/src/stack.h
 [stack.md-link]: https://github.com/PogSmok/C-SDS/blob/master/docs/stack.md
+[deque.h-link]: https://github.com/PogSmok/C-SDS/blob/master/src/deque.h
 
 [issue-badge]: https://img.shields.io/badge/%F0%9F%91%BE-Report%20a%20bug-%23a8161b?style=for-the-badge&labelColor=%23ab5053
 [feature-badge]: https://img.shields.io/badge/%F0%9F%92%A1-Suggest%20a%20feature-%2300d1ca?style=for-the-badge&labelColor=%23c8f7f6
@@ -52,7 +53,7 @@ C-SDS consists of:
 [vector.md-badge]: https://img.shields.io/badge/%E2%9C%94%EF%B8%8F-vector.md-green?style=for-the-badge&labelColor=%23858483
 [queue.h-badge]: https://img.shields.io/badge/%E2%9D%8C-queue.h-red?style=for-the-badge&labelColor=%23858483
 [queue.md-badge]: https://img.shields.io/badge/%E2%9D%8C-queue.md-red?style=for-the-badge&labelColor=%23858483
-[deque.h-badge]: https://img.shields.io/badge/%E2%9D%8C-deque.h-red?style=for-the-badge&labelColor=%23858483
+[deque.h-badge]: https://img.shields.io/badge/〽%EF%B8%8F-deque.h-yellow?style=for-the-badge&labelColor=%23858483
 [deque.md-badge]: https://img.shields.io/badge/%E2%9D%8C-deque.md-red?style=for-the-badge&labelColor=%23858483
 [set.h-badge]: https://img.shields.io/badge/%E2%9D%8C-set.h-red?style=for-the-badge&labelColor=%23858483
 [set.md-badge]: https://img.shields.io/badge/%E2%9D%8C-set.md-red?style=for-the-badge&labelColor=%23858483
