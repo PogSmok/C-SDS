@@ -24,12 +24,19 @@ C-SDS consists of:
 * [src][src-link] > Directory with source code of libraries
 
 # Library progress
-## [![header][stack.h-badge]][stack.h-link] [![documentation][stack.md-badge]][stack.md-link]
-## [![header][vector.h-badge]][vector.h-link] [![documentation][vector.md-badge]][vector.md-link]
-## ![header][queue.h-badge] ![documentation][queue.md-badge]
-## [![header][deque.h-badge]][deque.h-link] ![documentation][deque.md-badge]
-## ![header][set.h-badge] ![documentation][set.md-badge]
-## ![header][map.h-badge] ![documentation][map.md-badge]
+| Library | Source code | Documentation 
+| ------- | ----------- | -------------
+| string  | ❌         | ❌
+| stack   | ✔️[stack.h][stack.h-link] | ✔️[stack.md][stack.md-link]
+| vector  | ✔️[vector.h][vector.h-link] | ✔️[vector.md][vector.md-link]
+| queue   | ❌         | ❌
+| deque   | 〽️ [deque.h][deque.h-link] | ❌
+| set     |  ❌         | ❌
+| map     |  ❌         | ❌
+
+✔️ - operational <br > 
+〽️ - work in progress <br > 
+❌ - not implemented yet
 
 [issue-link]: https://github.com/PogSmok/C-SDS/issues
 [feature-link]: https://github.com/PogSmok//C-SDS/discussions/categories/ideas
@@ -46,15 +53,3 @@ C-SDS consists of:
 [issue-badge]: https://img.shields.io/badge/%F0%9F%91%BE-Report%20a%20bug-%23a8161b?style=for-the-badge&labelColor=%23ab5053
 [feature-badge]: https://img.shields.io/badge/%F0%9F%92%A1-Suggest%20a%20feature-%2300d1ca?style=for-the-badge&labelColor=%23c8f7f6
 [license-badge]: https://img.shields.io/badge/Apache%202.0-red?style=for-the-badge&label=License
-[stack.h-badge]: https://img.shields.io/badge/%E2%9C%94%EF%B8%8F-stack.h-green?style=for-the-badge&labelColor=%23858483
-[stack.md-badge]: https://img.shields.io/badge/%E2%9C%94%EF%B8%8F-stack.md-green?style=for-the-badge&labelColor=%23858483
-[vector.h-badge]: https://img.shields.io/badge/%E2%9C%94%EF%B8%8F-vector.h-green?style=for-the-badge&labelColor=%23858483
-[vector.md-badge]: https://img.shields.io/badge/%E2%9C%94%EF%B8%8F-vector.md-green?style=for-the-badge&labelColor=%23858483
-[queue.h-badge]: https://img.shields.io/badge/%E2%9D%8C-queue.h-red?style=for-the-badge&labelColor=%23858483
-[queue.md-badge]: https://img.shields.io/badge/%E2%9D%8C-queue.md-red?style=for-the-badge&labelColor=%23858483
-[deque.h-badge]: https://img.shields.io/badge/〽%EF%B8%8F-deque.h-yellow?style=for-the-badge&labelColor=%23858483
-[deque.md-badge]: https://img.shields.io/badge/%E2%9D%8C-deque.md-red?style=for-the-badge&labelColor=%23858483
-[set.h-badge]: https://img.shields.io/badge/%E2%9D%8C-set.h-red?style=for-the-badge&labelColor=%23858483
-[set.md-badge]: https://img.shields.io/badge/%E2%9D%8C-set.md-red?style=for-the-badge&labelColor=%23858483
-[map.h-badge]: https://img.shields.io/badge/%E2%9D%8C-map.h-red?style=for-the-badge&labelColor=%23858483
-[map.md-badge]: https://img.shields.io/badge/%E2%9D%8C-map.md-red?style=for-the-badge&labelColor=%23858483
