@@ -51,7 +51,7 @@ limitations under the License.
  * @private
  */
 #define v_raw_byte_size(vector) \
-    v_capacity(vector)*sizeof(*vector)+VECTOR_META_SIZE
+    (v_capacity(vector)*sizeof(*vector)+VECTOR_META_SIZE)
 
 /**
  * @brief Destructs a vector
@@ -133,7 +133,7 @@ limitations under the License.
  * @return typename(*vector)
  */
 #define v_at(vector, n) \
-    vector[n]
+    (vector[n])
 
 /**
  * @brief Returns a reference to the first element in the vector.
@@ -141,7 +141,7 @@ limitations under the License.
  * @return typename(*vector)
  */
 #define v_front(vector) \
-    vector[0]
+    (vector[0])
 
 /**
  * @brief Returns a reference to the last element in the vector.
