@@ -14,131 +14,82 @@ limitations under the License.
 
 #pragma once
 
-#include <stdlib.h>
-#include <string.h>
+#ifndef stack_stdlib
+#define stack_stdlib
+#include <stdlib.h> // malloc() free() realloc()
+#endif // #ifndef stack_stdlib
 
-// Using any of the functions below with different than expected datatypes (see comments and documentation) will result in an undefined behaviour
-
-// T* content -> Array of type T, containing elements of the stack.
-// size_t elementSize -> Size in bytes of an element stored in content, equivilent to sizeof(T).
-// size_t size -> Amount of elements in stack.
-// size_t capacity -> Number of currently allocated elements (stack(T).content), once exceeded stack(T).content must be reallocated to greater size.
-#ifndef stack
-#define stack(T) \
-    struct { \
-        T* content; \
-        size_t elementSize; \
-        size_t size; \
+/**
+ * @brief Declaration of stack type
+ */
+#define stack(T)         \
+    struct {             \
+        T* content;      \
+        size_t size;     \
         size_t capacity; \
-    } 
+    }*
 
-#endif // #ifndef stack
-
-// Input: 
-//      T -> Type of the variable to create the stack for.
-// Output:
-//      stack(T) -> Created stack.
-// Description:
-//      Constructor of stack(T).
-//      stack(int) myStack = new_stack(int);
-// Behaviour:
-//      1) If malloc fails stack(T).content will be a NULL pointer.
-//      2) By default capacity of a stack(T) is 32
-#ifndef new_stack
-#define new_stack(T) \
-    { \
-        malloc(sizeof(T)*32), \
-        sizeof(T), \
-        0, \
-        32, \
-    }
-
-#endif // #ifndef new_stack
-
-// Input:
-//      stack(T) stack
-// Output:
-//      void -> Function works in-place.
-// Description:
-//      Deallocates content of the stack and sets all values to 0.
-//      free({2,0,9}) -> {}
-// Behaviour:
-//      1) stack.content is explicitly set to NULL, thus all unsaved data is irreversably lost.
-#ifndef stack_free
+/**
+ * @brief Destructs a stack
+ * @param {stack} stack
+ */
 #define stack_free(stack) \
-    free(stack.content); \
-    stack.content = NULL; \
-    stack.elementSize = 0; \
-    stack.size = 0; \
-    stack.capacity = 0;
+    free(stack->content); \
+    free(stack);          \
+    stack = NULL;
 
-#endif // #ifndef stack_free
+/**
+ * @brief Returns whether the stack is empty: i.e. whether its size is zero.
+ * @param {stack} stack
+ * @returns bool
+ */
+#define stack_empty(stack) \
+    (!stack || stack->size == 0)
 
-// Input:
-//      stack(T) stack
-// Output:
-//      bool -> True if stack is empty, otherwise false.
-// Description: 
-//      Checks whether there are any elements in stack.
-//      stack_is_empty({71,2}) -> false
-//      stack_is_empty({}) -> true
-#ifndef stack_is_empty
-#define stack_is_empty(stack) \
-    stack.size == 0
+/**
+ * @brief Returns the number of elements in the stack.
+ * @param {stack} stack
+ * @returns size_t
+ */
+#define stack_size(stack) \
+    (stack ? stack->size : (size_t)0)
 
-#endif // #ifndef stack_is_empty
-
-// Input:
-//      stack(T) stack
-// Output:
-//      T -> top-most element of the stack.
-// Description: 
-//      Returns top-most element of the stack.
-//      stack_top({6,2,1}) -> 1
-// Behaviour:
-//      1) If the stack is empty, stack_top(stack(T)) will return whatever data is stored at stack(T).content[0]
-#ifndef stack_top
+/**
+ * @brief Returns a pointer to the top element in the stack.
+ *        Since stacks are last-in first-out containers, the top element is the last element inserted into the stack.
+ * @param {stack} stack
+ * @return typeof(stack->content)
+ */
 #define stack_top(stack) \
-    stack.size == 0 ? stack.content[0] : stack.content[stack.size-1]  
+    (stack->content+stack->size-1)
 
-#endif // #ifndef stack_top\
-
-// Input:
-//      stack(T) stack
-//      T element -> Element that is going to be pushed to the top.
-// Output:
-//      void -> Function works in-place.
-// Description: 
-//      Adds a new element to the top of the stack.
-//      Reallocates stack(T).content, if it is needed to fit the new element.
-//      stack_push({24,6,3}, 7) -> {24,6,3,7}
-// Behaviour:
-//      1) If reallocation fails nothing is done.
-#ifndef stack_push
-#define stack_push(stack, element) \
-    do { \
-        void* p = stack.content; \
-        if (stack.size >= stack.capacity) p = realloc(stack.content, stack.elementSize*stack.capacity*2); \
-        if (p != NULL) { \
-            stack.capacity *= 2; \
-            stack.content = p; \
-            stack.content[stack.size++] = element; \
-        } \
+/**
+ * @brief Inserts a new element at the top of the stack, above its current top element.
+ * @param {stack} stack
+ * @param {typeof(*stack->content)} element
+ */
+#define stack_push(stack, element)                                                        \
+    do {                                                                                  \
+        if(!stack) {                                                                      \
+            stack = malloc(sizeof(*stack));                                               \
+            stack->content = malloc(sizeof(*stack->content)*32);                          \
+            stack->capacity = 32;                                                         \
+            stack->size = 1;                                                              \
+            stack->content[0] = (element);                                                \
+        } else if(stack->size >= stack->capacity) {                                       \
+            /* growth is exponential */                                                   \
+            void* p = realloc(stack->content, sizeof(*stack->content)*2*stack->capacity); \
+            if(p) {                                                                       \
+                stack->content = p;                                                       \
+                stack->capacity *= 2;                                                     \
+                stack->content[stack->size++] = (element);                                \
+            }                                                                             \
+        } else stack->content[stack->size++] = (element);                                 \
     } while(0)
 
-#endif // #ifndef stack_push
-
-// Input:
-//      stack(T) stack
-// Output:
-//      void -> Function works in-place.
-// Description: 
-//      Removes top-most element of the stack.
-//      stack_pop({12,5,1}) -> {12,5}
-// Behaviour:
-//      1) If the stack is empty nothing is done.
-#ifndef stack_pop
+/**
+ * @brief Removes the element on top of the stack, effectively reducing its size by one.
+ * @param {stack} stack
+ */
 #define stack_pop(stack) \
-    if (stack.size != 0) stack.size--;
-
-#endif // #ifndef stack_pop
+    if(stack->size) stack->size--;
