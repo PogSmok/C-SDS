@@ -25,27 +25,27 @@ limitations under the License.
 #endif // #ifndef v_string
 
 /**
- * Helper struct for storing information about the vector, it is stored at vector[-1]
+ * @brief Helper struct for storing information about the vector, it is stored at vector[-1]
  * @private
  */
 #define Vector_meta_data struct { size_t size; size_t capacity; }
 #define VECTOR_META_SIZE sizeof(Vector_meta_data)
 
 /**
- * Standardization of the syntax for definition of a vector
+ * @brief Standardization of the syntax for definition of a vector
  * @param {Type} T
  */
 #define vector(T) T*
 
 /**
- * Returns memory adress of vector's meta data
+ * @brief Returns memory adress of vector's meta data
  * @private
  */
 #define v_meta(vector) \
     ((Vector_meta_data*)(vector-VECTOR_META_SIZE))
 
 /**
- * Returns number of bytes vector allocates, including meta data
+ * @brief Returns number of bytes vector allocates, including meta data
  * @param {vector} vector
  * @return {size_t}
  * @private
@@ -54,14 +54,14 @@ limitations under the License.
     v_capacity(vector)*sizeof(*vector)+VECTOR_META_SIZE
 
 /**
- * Destructs a vector
+ * @brief Destructs a vector
  * @param {vector} vector
  */
 #define v_free(vector) \
     free(v_meta(vector))
 
 /**
- * Returns the number of elements in the vector.
+ * @brief Returns the number of elements in the vector.
  * @param {vector} vector
  * @return size_t
  */
@@ -69,7 +69,7 @@ limitations under the License.
     (vector ? v_meta(vector)->size : 0)
 
 /**
- * Helper function for exponential growth
+ * @brief Helper function for exponential growth
  * @param {vector}
  */
 #define DEFAULT_VECTOR_CAPACITY 32
@@ -86,7 +86,7 @@ limitations under the License.
     }  while(0)
 
 /**
- * Resizes the container so that it contains n elements
+ * @brief Resizes the container so that it contains n elements
  * @param {vector} vector
  * @param {size_t} n
  */
@@ -98,7 +98,7 @@ limitations under the License.
     } while(0)
 
 /**
- * Returns the size of the storage space currently allocated for the vector, expressed in terms of elements.
+ * @brief Returns the size of the storage space currently allocated for the vector, expressed in terms of elements.
  * @param {vector} vector
  * @return size_t
  */
@@ -106,7 +106,7 @@ limitations under the License.
     (vector ? v_meta(vector)->capacity : 0)
 
 /**
- * Checks whether there are any elements in vector
+ * @brief Checks whether there are any elements in vector
  * @param {vector} vector
  * @return boolean 
  */
@@ -114,7 +114,7 @@ limitations under the License.
     (!vector || (v_meta(vector)->size == 0))
 
 /**
- * Requests that the vector capacity be at least enough to contain n elements.
+ * @brief Requests that the vector capacity be at least enough to contain n elements.
  * @param {vector} vector
  * @param {size_t} n
  */
@@ -127,7 +127,7 @@ limitations under the License.
      } while(0)
 
 /**
- * Returns a reference to the element at position n in the vector.
+ * @brief Returns a reference to the element at position n in the vector.
  * @param {vector} vector
  * @param {size_t} n
  * @return typename(*vector)
@@ -136,7 +136,7 @@ limitations under the License.
     vector[n]
 
 /**
- * Returns a reference to the first element in the vector.
+ * @brief Returns a reference to the first element in the vector.
  * @param {vector} vector
  * @return typename(*vector)
  */
@@ -144,7 +144,7 @@ limitations under the License.
     vector[0]
 
 /**
- * Returns a reference to the last element in the vector.
+ * @brief Returns a reference to the last element in the vector.
  * @param {vector} vector
  * @return typename(*vector)
  */
@@ -152,7 +152,7 @@ limitations under the License.
     vector[v_size(vector)-1]
 
 /**
- * Adds a new element at the end of the vector, after its current last element. The content of val is copied to the new element.
+ * @brief Adds a new element at the end of the vector, after its current last element. The content of val is copied to the new element.
  * @param {vector} vector
  * @param {typename(*vector)} val
  */
@@ -162,14 +162,14 @@ limitations under the License.
     v_meta(vector)->size++;
 
 /**
- * Removes the last element in the vector, effectively reducing the container size by one.
+ * @brief Removes the last element in the vector, effectively reducing the container size by one.
  * @param {vector} vector
  */
 #define v_pop_back(vector)  \
     v_meta(vector)->size--;
 
 /**
- * The vector is extended by inserting a new element before the element at given index, effectively increasing the container size by one.
+ * @brief The vector is extended by inserting a new element before the element at given index, effectively increasing the container size by one.
  * @param {vector} vector
  * @param {size_t} index
  * @param {typename(*vector)} val
@@ -179,7 +179,7 @@ limitations under the License.
     memmove(vector+(index)+1, vector+(index), v_size(vector)-(index)); \
     vector[index] = (val);  
 /**
- * Removes from the vector a range of elements ([from,to)).
+ * @brief Removes from the vector a range of elements ([from,to)).
  * @param {vector} vector
  * @param {size_t} from
  * @param {size_t} to
@@ -189,7 +189,7 @@ limitations under the License.
    v_meta(vector)->size -= (to)-(from);
 
 /**
- * Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
+ * @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
  * @param {vector} vector
  */
 #define v_clear(vector) \
@@ -197,7 +197,7 @@ limitations under the License.
     vector.size = 0;
 
 /**
- * Creates a copy of src_vector and stores it at dst_vector.
+ * @brief Creates a copy of src_vector and stores it at dst_vector.
  * @param {vector} dst_vector
  * @param {vector} src_vector
  */
