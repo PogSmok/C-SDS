@@ -27,8 +27,8 @@ C-SDS consists of:
 | Library | Source code | Documentation 
 | ------- | ----------- | -------------
 | string  | ❌         | ❌
-| stack   | ✔️[stack.h][stack.h-link] | ✔️[stack.md][stack.md-link]
-| vector  | ✔️[vector.h][vector.h-link] | ✔️[vector.md][vector.md-link]
+| stack   | ✔️[stack.h][stack.h-link] | ❌
+| vector  | ✔️[vector.h][vector.h-link] | ❌
 | queue   | ❌         | ❌
 | deque   | 〽️ [deque.h][deque.h-link] | ❌
 | set     |  ❌         | ❌
