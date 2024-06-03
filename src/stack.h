@@ -41,7 +41,7 @@ limitations under the License.
 /**
  * @brief Returns whether the stack is empty: i.e. whether its size is zero.
  * @param {stack} stack
- * @returns bool
+ * @return bool
  */
 #define stack_empty(stack) \
     (!stack || stack->size == 0)
@@ -49,7 +49,7 @@ limitations under the License.
 /**
  * @brief Returns the number of elements in the stack.
  * @param {stack} stack
- * @returns size_t
+ * @return size_t
  */
 #define stack_size(stack) \
     (stack ? stack->size : (size_t)0)
