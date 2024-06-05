@@ -24,19 +24,28 @@ C-SDS consists of:
 * [src][src-link] > Directory with source code of libraries
 
 # Library progress
-| Library | Source code | Documentation 
-| ------- | ----------- | -------------
-| string  | ❌         | ❌
-| stack   | ✔️[stack.h][stack.h-link] | ❌
-| vector  | ✔️[vector.h][vector.h-link] | ❌
-| queue   | ❌         | ❌
-| deque   | 〽️ [deque.h][deque.h-link] | ❌
-| set     |  ❌         | ❌
-| map     |  ❌         | ❌
-
 ✔️ - operational <br > 
 〽️ - work in progress <br > 
 ❌ - not implemented yet
+## Sequence containers
+| Library | Source code | Documentation 
+| ------- | ----------- | -------------
+| vector  | ✔️[vector.h][vector.h-link] | ❌
+| deque   | 〽️ [deque.h][deque.h-link] | ❌
+| forward_list | ❌         | ❌
+| list | ❌         | ❌
+
+## Associative containers
+| Library | Source code | Documentation 
+| ------- | ----------- | -------------
+| set     |  ❌         | ❌
+| map     |  ❌         | ❌
+
+## Container adaptors
+| Library | Source code | Documentation 
+| ------- | ----------- | -------------
+| stack   | ✔️[stack.h][stack.h-link] | ❌
+| queue   | ❌         | ❌
 
 [issue-link]: https://github.com/PogSmok/C-SDS/issues
 [feature-link]: https://github.com/PogSmok//C-SDS/discussions/categories/ideas
