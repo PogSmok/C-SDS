@@ -93,4 +93,4 @@ limitations under the License.
  * @param {stack} stack
  */
 #define stack_pop(stack) \
-    if(stack->size) stack->size--;
+    if(stack->size) { stack->size--; }

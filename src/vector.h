@@ -73,16 +73,16 @@ limitations under the License.
  * @param {vector}
  */
 #define DEFAULT_VECTOR_CAPACITY 32
-#define v_grow(vector)                                                                                     \
-    do {                                                                                                   \
-        void* p = NULL;                                                                                    \
-        if(v_capacity(vector)) p = realloc(vector-VECTOR_META_SIZE, v_meta(vector)->capacity*(*vector)*2); \
-        else p = malloc(DEFAULT_VECTOR_CAPACITY*sizeof(*vector)+VECTOR_META_SIZE);                         \
-        if(p != NULL) {                                                                                    \
-            vector = p+VECTOR_META_SIZE;                                                                   \
-            size_t capacity = v_meta(vector)->capacity;                                                    \
-            v_meta(vector)->capacity = capacity ? capacity<<1 : DEFAULT_VECTOR_CAPACITY;                   \
-        }                                                                                                  \
+#define v_grow(vector)                                                                                         \
+    do {                                                                                                       \
+        void* p = NULL;                                                                                        \
+        if(v_capacity(vector)) { p = realloc(vector-VECTOR_META_SIZE, v_meta(vector)->capacity*(*vector)*2); } \
+        else { p = malloc(DEFAULT_VECTOR_CAPACITY*sizeof(*vector)+VECTOR_META_SIZE); }                         \
+        if(p != NULL) {                                                                                        \
+            vector = p+VECTOR_META_SIZE;                                                                       \
+            size_t capacity = v_meta(vector)->capacity;                                                        \
+            v_meta(vector)->capacity = capacity ? capacity<<1 : DEFAULT_VECTOR_CAPACITY;                       \
+        }                                                                                                      \
     }  while(0)
 
 /**
@@ -156,9 +156,9 @@ limitations under the License.
  * @param {vector} vector
  * @param {typename(*vector)} val
  */
-#define v_push_back(vector, val)                                       \
-    if(v_size(vector) == v_capacity(vector)) v_grow(vector);           \
-    vector[v_size(vector)] = (val);                                    \
+#define v_push_back(vector, val)                                 \
+    if(v_size(vector) == v_capacity(vector)) { v_grow(vector); } \
+    vector[v_size(vector)] = (val);                              \
     v_meta(vector)->size++;
 
 /**
@@ -166,7 +166,7 @@ limitations under the License.
  * @param {vector} vector
  */
 #define v_pop_back(vector)  \
-    v_meta(vector)->size--;
+    if(v_meta(vector)->size) { v_meta(vector)->size--; }
 
 /**
  * @brief The vector is extended by inserting a new element before the element at given index, effectively increasing the container size by one.
@@ -174,8 +174,8 @@ limitations under the License.
  * @param {size_t} index
  * @param {typename(*vector)} val
  */
-#define v_insert(vector, index, val) \
-    if(v_size(vector) == v_capacity(vector)) v_grow(vector); \
+#define v_insert(vector, index, val)                                   \
+    if(v_size(vector) == v_capacity(vector)) { v_grow(vector) };       \
     memmove(vector+(index)+1, vector+(index), v_size(vector)-(index)); \
     vector[index] = (val);  
 /**
