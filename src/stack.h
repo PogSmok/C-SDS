@@ -68,12 +68,13 @@ limitations under the License.
  * @param {stack} stack
  * @param {typeof(*stack->content)} element
  */
+#define DEFAULT_STACK_CAPACITY 32
 #define stack_push(stack, element)                                                        \
     do {                                                                                  \
         if(!stack) {                                                                      \
             stack = malloc(sizeof(*stack));                                               \
-            stack->content = malloc(sizeof(*stack->content)*32);                          \
-            stack->capacity = 32;                                                         \
+            stack->content = malloc(sizeof(*stack->content)*DEFAULT_STACK_CAPACITY);      \
+            stack->capacity = DEFAULT_STACK_CAPACITY;                                     \
             stack->size = 1;                                                              \
             stack->content[0] = (element);                                                \
         } else if(stack->size >= stack->capacity) {                                       \
