@@ -55,13 +55,13 @@ limitations under the License.
     (stack ? stack->size : (size_t)0)
 
 /**
- * @brief Returns a pointer to the top element in the stack.
+ * @brief Returns the top element in the stack.
  *        Since stacks are last-in first-out containers, the top element is the last element inserted into the stack.
  * @param {stack} stack
  * @return typeof(stack->content)
  */
 #define stack_top(stack) \
-    (stack->content+stack->size-1)
+    (stack->content[stack->size-1])
 
 /**
  * @brief Inserts a new element at the top of the stack, above its current top element.
