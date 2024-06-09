@@ -175,7 +175,7 @@ limitations under the License.
  * @param {typename(*vector)} val
  */
 #define v_insert(vector, index, val)                                   \
-    if(v_size(vector) == v_capacity(vector)) { v_grow(vector) };       \
+    if(v_size(vector) == v_capacity(vector)) { v_grow(vector); }       \
     memmove(vector+(index)+1, vector+(index), v_size(vector)-(index)); \
     vector[index] = (val);  
 /**
