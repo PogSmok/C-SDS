@@ -27,6 +27,12 @@ C-SDS consists of:
 ✔️ - operational <br > 
 〽️ - work in progress <br > 
 ❌ - not implemented yet
+
+## Dynamic String
+| Library | Source Code | Documentation
+| ------- | ----------- | -------------
+| stringpp | ❌          | ❌          
+
 ## Sequence containers
 | Library | Source code | Documentation 
 | ------- | ----------- | -------------
