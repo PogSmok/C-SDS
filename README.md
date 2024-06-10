@@ -31,7 +31,7 @@ C-SDS consists of:
 ## Dynamic String
 | Library | Source Code | Documentation
 | ------- | ----------- | -------------
-| stringpp | ❌          | ❌          
+| stringpp | 〽️ [stringpp.h][stringpp.h-link] | ❌          
 
 ## Sequence containers
 | Library | Source code | Documentation 
@@ -59,6 +59,7 @@ C-SDS consists of:
 [readme-link]: https://github.com/PogSmok/C-SDS/blob/master/README.md
 [docs-link]: https://github.com/PogSmok/C-SDS/tree/master/docs
 [src-link]: https://github.com/PogSmok/C-SDS/tree/master/src
+[stringpp.h-link]: https://github.com/PogSmok/C-SDS/blob/master/src/stringpp.h
 [vector.h-link]: https://github.com/PogSmok/C-SDS/blob/master/src/vector.h
 [vector.md-link]: https://github.com/PogSmok/C-SDS/blob/master/docs/vector.md
 [stack.h-link]: https://github.com/PogSmok/C-SDS/blob/master/src/stack.h
