@@ -24,6 +24,7 @@ C-SDS consists of:
 * [src][src-link] > Directory with source code of libraries
 
 # Library progress
+💎 - finished <br >
 ✔️ - operational <br > 
 〽️ - work in progress <br > 
 ❌ - not implemented yet
