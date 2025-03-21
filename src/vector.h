@@ -28,8 +28,8 @@ limitations under the License.
  * @brief Helper struct for storing information about the vector, it is stored at vector[-1]
  * @private
  */
-#define Vector_meta_data struct { size_t size; size_t capacity; }
-#define VECTOR_META_SIZE sizeof(Vector_meta_data)
+#define VECTOR_META_DATA struct { size_t size; size_t capacity; }
+#define VECTOR_META_SIZE sizeof(VECTOR_META_DATA)
 
 /**
  * @brief Standardization of the syntax for definition of a vector
@@ -42,7 +42,7 @@ limitations under the License.
  * @private
  */
 #define v_meta(vector) \
-    ((Vector_meta_data*)(vector-VECTOR_META_SIZE))
+    ((VECTOR_META_DATA*)(vector-VECTOR_META_SIZE))
 
 /**
  * @brief Returns number of bytes vector allocates, including meta data
@@ -77,7 +77,11 @@ limitations under the License.
     do {                                                                                                       \
         void* p = NULL;                                                                                        \
         if(v_capacity(vector)) { p = realloc(vector-VECTOR_META_SIZE, v_meta(vector)->capacity*(*vector)*2); } \
-        else { p = malloc(DEFAULT_VECTOR_CAPACITY*sizeof(*vector)+VECTOR_META_SIZE); }                         \
+        else {                                                                                                 \
+            p = malloc(DEFAULT_VECTOR_CAPACITY*sizeof(*vector)+VECTOR_META_SIZE);                              \
+            ((VECTOR_META_DATA*)p)->size = 0;                                                                  \
+            ((VECTOR_META_DATA*)p)->capacity = 0;                                                              \
+        }                                                                                                      \
         if(p != NULL) {                                                                                        \
             vector = p+VECTOR_META_SIZE;                                                                       \
             size_t capacity = v_meta(vector)->capacity;                                                        \
