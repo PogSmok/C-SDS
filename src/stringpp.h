@@ -67,6 +67,28 @@ limitations under the License.
     free(string_meta(string))
 
 /**
+ * @brief Helper function for exponential growth
+ * @param {string} string
+ * @private
+ */
+#define DEFAULT_STRING_CAPACITY 32
+#define string_grow(string)                                                                                              \
+    do {                                                                                                                 \
+        void* p = NULL;                                                                                                  \
+        if(string_capacity(string)) { p = realloc(string-STRING_META_SIZE, string_meta(string)->capacity*(*string)*2); } \
+        else {                                                                                                           \
+            p = malloc(DEFAULT_STRING_CAPACITY*sizeof(*string)+STRING_META_SIZE);                                        \
+            ((STRING_META_DATA*)p)->size = 0;                                                                            \
+            ((STRING_META_DATA*)p)->capacity = 0;                                                                        \
+        }                                                                                                                \
+        if(p != NULL) {                                                                                                  \
+            string = p+STRING_META_SIZE;                                                                                 \
+            size_t capacity = string_meta(string)->capacity;                                                             \
+            string_meta(string)->capacity = capacity ? capacity<<1 : DEFAULT_STRING_CAPACITY;                            \
+        }                                                                                                                \
+    }  while(0)
+
+/**
  * @brief Returns a pointer to the first character of the string.
  * @param {string} string
  * @returns {char*}
@@ -89,7 +111,7 @@ limitations under the License.
  * @returns {size_t}
  */
 #define string_size(string) \
-	string_length(string) 
+	(string_length(string)) 
 
 /**
  * @brief Returns the length of the string, in terms of bytes.
@@ -146,5 +168,7 @@ limitations under the License.
  * @param {string} string
  * @param {char} c
  */
-#define string_push_back(string, c) \
-	
+#define string_push_back(string, c)                                               \
+    if(string_length(string) == string_capacity(string)) { string_grow(string); } \
+    string[string_length(string)] = (c);                                          \
+    string_meta(string)->size++;
