@@ -20,7 +20,7 @@ C-SDS is a comprehensive collection of well-known and practical data structures 
 C-SDS consists of:
 * [README.md][readme-link] > File describing the project
 * [LICENSE][license-link] > License under which the libraries must be used
-* [docs][docs-link] > Directory with documentation for libraries
+* ~~[docs][docs-link] > Directory with documentation for libraries~~ (to be done)
 * [src][src-link] > Directory with source code of libraries
 
 # Library progress
